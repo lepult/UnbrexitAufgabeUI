@@ -1,7 +1,7 @@
 {
-  "name": "chayns-react-template", // ToDo: Update name to match project name
+  "name": "chayns-react-template",
   "version": "1.0.0",
-  "description": "This is an template to use chayns® + React.", // ToDo: Update description to match to your project
+  "description": "This is an template to use chayns® + React.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --config ./webpack/dev.babel.js --https",
