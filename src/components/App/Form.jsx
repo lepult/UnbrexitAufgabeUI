@@ -61,6 +61,20 @@ function Form() {
     };
     return (
         <div className="formList">
+            <div className="checkboxes">
+                <Checkbox
+                    label="Anonym verschicken"
+                    type="checkbox"
+                    toggleButton
+                    onChange={setIsAnonymous}
+                />
+                <Checkbox
+                    label="Betrag verbergen"
+                    type="checkbox"
+                    toggleButton
+                    onChange={setIsAmountHidden}
+                />
+            </div>
             <div className="dialogButtonsContainer">
                 {tipArray.map((e) => (
                     <Button
@@ -83,20 +97,6 @@ function Form() {
                         {`${e}€`}
                     </Button>
                 ))}
-            </div>
-            <div className="checkboxes">
-                <Checkbox
-                    label="Anonym verschicken"
-                    type="checkbox"
-                    toggleButton
-                    onChange={setIsAnonymous}
-                />
-                <Checkbox
-                    label="Betrag verbergen"
-                    type="checkbox"
-                    toggleButton
-                    onChange={setIsAmountHidden}
-                />
             </div>
         </div>
     );
