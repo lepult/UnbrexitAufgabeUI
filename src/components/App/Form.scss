@@ -4,8 +4,12 @@
 .dialogButtonsContainer{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    margin: 0px 0px 10px;
+    margin: 0px auto 10px;
+    justify-content: center;
+}
+.amountButton{
+    width: fit-content;
+    margin: 0px 5px;
 }
 .dialogButton{
     width: 40%;
