@@ -12,7 +12,11 @@ function Form() {
         chayns.intercom.sendMessageToPage({
             text: `Betrag: ${tipAmount}\n Ist anonym: ${isAnonymous}\n Betrag ist verborgen: ${isAmountHidden}`,
         }).then((data) => {
-            if (data.status === 200) chayns.dialog.alert('', 'Thomas Mayer hat dein Trinkgeld erhalten.');
+            chayns.showWaitCursor();
+            setTimeout(() => {
+                if (data.status === 200) chayns.dialog.alert('', 'Thomas Mayer hat dein Trinkgeld erhalten.');
+                chayns.hideWaitCursor();
+            }, 1000);
         });
     };
 
