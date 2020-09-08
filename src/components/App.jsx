@@ -1,35 +1,16 @@
 import { hot } from 'react-hot-loader/root';
-import React, { PureComponent } from 'react';
+import React from 'react';
+import Header from './App/Header.jsx';
+import Form from './App/Form.jsx';
 
-class App extends PureComponent {
+function App() {
+    return (
+        <div>
+            <Header/>
+            <Form/>
 
-    componentDidMount() {
-        chayns.dialog.select({
-            multiselect: true,
-            message: 'Bist du sicher, dass du *Menge*€ Trinkgeld geben willst?',
-            list: [{
-                name: 'Anonym verschicken',
-                value: 999,
-                isSelected: true,
-            }, {
-                name: 'Betrag verbergen',
-                value: {
-                    anount: 23,
-                },
-                isSelected: true,
-            }]
-        }).then((data) => {
-            console.log(data);
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                lelelel
-            </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default App;
