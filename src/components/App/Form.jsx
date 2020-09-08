@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import { Button } from 'chayns-components/lib';
+import { Button, Checkbox } from 'chayns-components/lib';
 import './Form.scss';
 
 function Form() {
     const [tipAmount, setTipAmount] = useState(parseFloat(0).toFixed(2));
+    const [isAnonymous, setIsAnonymous] = useState(false);
+    const [isAmountHidden, setIsAmountHidden] = useState(false);
+
+    const sendIntercom = () => {
+        chayns.intercom.sendMessageToPage({
+            text: `Betrag: ${tipAmount}\n Ist anonym: ${isAnonymous}\n Betrag ist verborgen: ${isAmountHidden}`,
+        }).then((data) => {
+            if (data.status === 200) chayns.dialog.alert('', 'Thomas Mayer hat dein Trinkgeld erhalten.');
+        });
+    };
 
     const payTip = () => {
         chayns.dialog.select({
@@ -74,10 +84,9 @@ function Form() {
             setTipAmount(parseFloat(data.selection[0].value).toFixed(2));
         });
     };
-
     return (
-        <div>
-            <div className="formList">
+        <div className="formList">
+            <div className="dialogButtonsContainer">
                 <Button
                     className="dialogButton"
                     onClick={payTip}
@@ -91,9 +100,31 @@ function Form() {
                     Getränk spendieren
                 </Button>
             </div>
-            <div>
-                {tipAmount}
-                €
+            <div className="textAmount">
+                {`Betrag: ${tipAmount}€`}
+            </div>
+            <div className="checkboxes">
+                <Checkbox
+                    label="Anonym verschicken"
+                    type="checkbox"
+                    toggleButton
+                    onChange={setIsAnonymous}
+                />
+                <Checkbox
+                    label="Betrag verbergen"
+                    type="checkbox"
+                    toggleButton
+                    onChange={setIsAmountHidden}
+                />
+            </div>
+            <div className="test">
+                <Button
+                    onClick={sendIntercom}
+                    className="confirmButton"
+                    disabled={tipAmount === parseFloat(0).toFixed(2)}
+                >
+                    Bezahlen
+                </Button>
             </div>
         </div>
     );

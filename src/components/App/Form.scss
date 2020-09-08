@@ -1,9 +1,27 @@
 .formList{
+    margin-top: 40px;
+}
+.dialogButtonsContainer{
     display: flex;
     flex-direction: row;
-    align-content: space-around;;;
+    justify-content: space-around;
+    margin: 0px 0px 10px;
 }
 .dialogButton{
-    width: fit-content;
-    margin: 10px 0px;
+    width: 40%;
+    margin: 5px 0;
+}
+.textAmount{
+    text-align: center;
+}
+.checkboxes{
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: column;
+}
+.confirmButton{
+}
+.test{
+    width:100%;
+    text-align: center;
 }
