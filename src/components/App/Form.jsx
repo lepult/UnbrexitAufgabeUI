@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Checkbox } from 'chayns-components/lib';
+import { Button, Checkbox, Input } from 'chayns-components/lib';
 import './Form.scss';
 
 function Form() {
-    const [tipArray] = useState([parseFloat(1).toFixed(2), parseFloat(2.5).toFixed(2), parseFloat(5).toFixed(2), parseFloat(10).toFixed(2)]);
+    const [tipArray] = useState([parseFloat(1).toFixed(2), parseFloat(2.5).toFixed(2), parseFloat(5).toFixed(2)]);
     const [tipAmount, setTipAmount] = useState(parseFloat(0).toFixed(2));
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [isAmountHidden, setIsAmountHidden] = useState(false);
+    const [amountInput, setAmountInput] = useState('');
 
     const sendIntercom = () => {
         chayns.intercom.sendMessageToPage({
@@ -19,6 +20,88 @@ function Form() {
             }, 1000);
         });
     };
+
+    useState(() => {
+        console.log(amountInput);
+    }, [amountInput]);
+
+    return (
+        <div className="formList">
+            <div className="checkboxes">
+                <Checkbox
+                    label="Anonym verschicken"
+                    type="checkbox"
+                    toggleButton
+                    onChange={setIsAnonymous}
+                />
+                <Checkbox
+                    label="Betrag verbergen"
+                    type="checkbox"
+                    toggleButton
+                    onChange={setIsAmountHidden}
+                />
+            </div>
+            <div className="dialogButtonsContainer">
+                {tipArray.map((e) => (
+                    <Button
+                        className="amountButton"
+                        onClick={() => {
+                            setTipAmount(e);
+                            chayns.dialog.confirm('', `Bitte bestätitge deinen Betrag: ${parseFloat(e).toFixed(2)}€`, [{
+                                text: 'Bezahlen',
+                                buttonType: 1,
+                            }, {
+                                text: 'Abbrechen',
+                                buttonType: 0,
+                            }]).then((a) => {
+                                if (a === 1) {
+                                    sendIntercom();
+                                }
+                            });
+                        }}
+                    >
+                        {`${e}€`}
+                    </Button>
+                ))}
+                <Input
+                    type="number"
+                    value={amountInput}
+                    onChange={(o) => { setAmountInput(o); console.log(amountInput); }}
+                    className="inputBox"
+                    style={{ width: '50px' }}
+                    placeholder="0.00€"
+                />
+                <Button
+                    className="confirmButton"
+                    disabled={
+                        amountInput
+                            ? false
+                            : true
+                    }
+                    onClick={() => {
+                        chayns.dialog.confirm('', `Bitte bestätitge deinen Betrag: ${parseFloat(amountInput).toFixed(2)}€`, [{
+                            text: 'Bezahlen',
+                            buttonType: 1,
+                        }, {
+                            text: 'Abbrechen',
+                            buttonType: 0,
+                        }]).then((a) => {
+                            if (a === 1) {
+                                sendIntercom();
+                            }
+                        });
+                    }}
+                >
+                    OK
+                </Button>
+            </div>
+        </div>
+    );
+}
+
+export default Form;
+
+/*
 
     const payDrink = () => {
         chayns.dialog.select({
@@ -63,47 +146,4 @@ function Form() {
             setTipAmount(parseFloat(data.selection[0].value).toFixed(2));
         });
     };
-    return (
-        <div className="formList">
-            <div className="checkboxes">
-                <Checkbox
-                    label="Anonym verschicken"
-                    type="checkbox"
-                    toggleButton
-                    onChange={setIsAnonymous}
-                />
-                <Checkbox
-                    label="Betrag verbergen"
-                    type="checkbox"
-                    toggleButton
-                    onChange={setIsAmountHidden}
-                />
-            </div>
-            <div className="dialogButtonsContainer">
-                {tipArray.map((e) => (
-                    <Button
-                        className="amountButton"
-                        onClick={() => {
-                            setTipAmount(e);
-                            chayns.dialog.confirm('', `Sicher, dass Du ${parseFloat(e).toFixed(2)}€ Trinkgeld geben willst?`, [{
-                                text: 'Bezahlen',
-                                buttonType: 1,
-                            }, {
-                                text: 'Abbrechen',
-                                buttonType: 0,
-                            }]).then((a) => {
-                                if (a === 1) {
-                                    sendIntercom();
-                                }
-                            });
-                        }}
-                    >
-                        {`${e}€`}
-                    </Button>
-                ))}
-            </div>
-        </div>
-    );
-}
-
-export default Form;
+    */
