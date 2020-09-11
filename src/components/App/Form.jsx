@@ -9,9 +9,9 @@ function Form() {
     const [isAmountHidden, setIsAmountHidden] = useState(false);
     const [amountInput, setAmountInput] = useState('');
 
-    const sendIntercom = () => {
+    const sendIntercom = (amount) => {
         chayns.intercom.sendMessageToPage({
-            text: `Betrag: ${tipAmount}\n Ist anonym: ${isAnonymous}\n Betrag ist verborgen: ${isAmountHidden}`,
+            text: `Betrag: £ ${parseFloat(amount).toFixed(2)}\n Ist anonym: ${isAnonymous}\n Betrag ist verborgen: ${isAmountHidden}`,
         }).then((data) => {
             chayns.showWaitCursor();
             setTimeout(() => {
@@ -44,10 +44,11 @@ function Form() {
             <div className="dialogButtonsContainer">
                 {tipArray.map((e) => (
                     <Button
+                        key={e}
                         className="amountButton"
                         onClick={() => {
                             setTipAmount(e);
-                            chayns.dialog.confirm('', `Bitte bestätitge deinen Betrag: ${parseFloat(e).toFixed(2)}€`, [{
+                            chayns.dialog.confirm('', `Bitte bestätitge Deinen Betrag: £ ${parseFloat(e).toFixed(2)}`, [{
                                 text: 'Bezahlen',
                                 buttonType: 1,
                             }, {
@@ -55,21 +56,21 @@ function Form() {
                                 buttonType: 0,
                             }]).then((a) => {
                                 if (a === 1) {
-                                    sendIntercom();
+                                    sendIntercom(tipAmount);
                                 }
                             });
                         }}
                     >
-                        {`${e}€`}
+                        {`£ ${e}`}
                     </Button>
                 ))}
                 <Input
                     type="number"
                     value={amountInput}
-                    onChange={(o) => { setAmountInput(o); console.log(amountInput); }}
+                    onChange={(o) => { setAmountInput(o); }}
                     className="inputBox"
                     style={{ width: '50px' }}
-                    placeholder="0.00€"
+                    placeholder="Betrag"
                 />
                 <Button
                     className="confirmButton"
@@ -79,7 +80,7 @@ function Form() {
                             : true
                     }
                     onClick={() => {
-                        chayns.dialog.confirm('', `Bitte bestätitge deinen Betrag: ${parseFloat(amountInput).toFixed(2)}€`, [{
+                        chayns.dialog.confirm('', `Bitte bestätitge Deinen Betrag: £ ${parseFloat(amountInput).toFixed(2)}`, [{
                             text: 'Bezahlen',
                             buttonType: 1,
                         }, {
@@ -87,7 +88,7 @@ function Form() {
                             buttonType: 0,
                         }]).then((a) => {
                             if (a === 1) {
-                                sendIntercom();
+                                sendIntercom(amountInput);
                             }
                         });
                     }}

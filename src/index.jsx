@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import './index.scss';
 
 // Constants
 import { IS_DEVELOPMENT } from './constants/environment';
