@@ -64,37 +64,39 @@ function Form() {
                         {`£ ${e}`}
                     </Button>
                 ))}
-                <Input
-                    type="number"
-                    value={amountInput}
-                    onChange={(o) => { setAmountInput(o); }}
-                    className="inputBox"
-                    style={{ width: '50px' }}
-                    placeholder="Betrag"
-                />
-                <Button
-                    className="confirmButton"
-                    disabled={
-                        amountInput
-                            ? false
-                            : true
-                    }
-                    onClick={() => {
-                        chayns.dialog.confirm('', `Bitte bestätitge Deinen Betrag: £ ${parseFloat(amountInput).toFixed(2)}`, [{
-                            text: 'Bezahlen',
-                            buttonType: 1,
-                        }, {
-                            text: 'Abbrechen',
-                            buttonType: 0,
-                        }]).then((a) => {
-                            if (a === 1) {
-                                sendIntercom(amountInput);
-                            }
-                        });
-                    }}
-                >
-                    OK
-                </Button>
+                <div className="inputContainer">
+                    <Input
+                        type="number"
+                        value={amountInput}
+                        onChange={(o) => { setAmountInput(o); }}
+                        className="inputBox"
+                        style={{ width: '50px' }}
+                        placeholder="Betrag"
+                    />
+                    <Button
+                        className="confirmButton"
+                        disabled={
+                            amountInput
+                                ? false
+                                : true
+                        }
+                        onClick={() => {
+                            chayns.dialog.confirm('', `Bitte bestätige Deinen Betrag: £ ${parseFloat(amountInput).toFixed(2)}`, [{
+                                text: 'Bezahlen',
+                                buttonType: 1,
+                            }, {
+                                text: 'Abbrechen',
+                                buttonType: 0,
+                            }]).then((a) => {
+                                if (a === 1) {
+                                    sendIntercom(amountInput);
+                                }
+                            });
+                        }}
+                    >
+                        OK
+                    </Button>
+                </div>
             </div>
         </div>
     );
